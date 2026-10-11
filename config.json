@@ -1,0 +1,153 @@
+{
+  "name": "Seeker",
+  "aliases": [
+    "seeker",
+    "ok seeker",
+    "hey seeker",
+    "yo seeker",
+    "seek her",
+    "seek a",
+    "seeka",
+    "seekah",
+    "sekker",
+    "seker",
+    "sika",
+    "seeker?"
+  ],
+  "leading_mishears": [
+    "secret",
+    "see kurt",
+    "see curt",
+    "si kur",
+    "c kurt"
+  ],
+  "feedback": {
+    "enabled": true,
+    "ack": true,
+    "error": true,
+    "startup": true,
+    "ack_text": null,
+    "ack_actions": [
+      "On it.",
+      "Will do.",
+      "Got it.",
+      "Sure thing.",
+      "Doing that now."
+    ],
+    "error_text": "Sorry, my brain is not responding.",
+    "startup_text": "I'm online and listening.",
+    "work_fillers": [
+      "Let me see.",
+      "One moment.",
+      "Looking into it."
+    ],
+    "work_filler_after_s": 4.0,
+    "max_speak_sentences": 3
+  },
+  "require_wake": true,
+  "conversation": {
+    "enabled": true,
+    "timeout_s": 30
+  },
+  "barge_in": {
+    "ratio": 6.0,
+    "min_rms": 0.03
+  },
+  "memory": {
+    "enabled": true,
+    "persist": true,
+    "history_turns": 12,
+    "path": "/home/infinite/.cache/seeker/history.json"
+  },
+  "wake_reply": "Yes?",
+  "unrecognized_reply": "I didn't catch that.",
+  "offline_reply": "I heard my name, but my brain is offline right now.",
+  "audio": {
+    "input_device": null,
+    "output_device": null,
+    "output_sink": "alsa_output.pci-0000_09_00.6.analog-stereo",
+    "sample_rate": 16000,
+    "frame_ms": 30,
+    "silence_ms": 800,
+    "silence_max_ms": 1500,
+    "stitch_s": 3.0,
+    "min_speech_ms": 250,
+    "preroll_ms": 400,
+    "max_utterance_s": 30,
+    "energy_ratio": 2.5,
+    "noise_floor_alpha": 0.95,
+    "min_rms": 0.006
+  },
+  "asr": {
+    "backend": "faster-whisper",
+    "faster_whisper": {
+      "model": "small.en",
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 8,
+      "beam_size": 1,
+      "language": "en",
+      "vad_filter": false,
+      "initial_prompt": "A spoken conversation with a voice assistant named Seeker. Hey Seeker.",
+      "beam_size_long": 2,
+      "long_s": 2.0
+    },
+    "audio8": {
+      "transcribe_url": "http://127.0.0.1:18190/v1/audio/transcriptions",
+      "model": "audio8-asr-infinite",
+      "language": "en"
+    }
+  },
+  "tts": {
+    "enabled": true,
+    "endpoint": "http://127.0.0.1:8770",
+    "voice": "af_bella",
+    "speed": 1.0,
+    "autostart": true,
+    "sidecar_run": "/home/infinite/Projects/sentient/tts_server/run.sh"
+  },
+  "brain": {
+    "backend": "auto",
+    "opencode": {
+      "server_url": "http://127.0.0.1:4097",
+      "config_dir": "/home/infinite/.config/seeker",
+      "binary": "opencode",
+      "workdir": "/home/infinite/.cache/seeker/workspace",
+      "model": "opencode-go/deepseek-v4.1-flash",
+      "agent": "seeker",
+      "autostart": true,
+      "timeout_s": 180,
+      "session_file": "/home/infinite/.cache/seeker/opencode_session.json",
+      "sessions_file": "/home/infinite/.cache/seeker/sessions.json",
+      "sessions_limit": 12,
+      "session_id": null
+    }
+  },
+  "status": {
+    "enabled": true,
+    "path": "/home/infinite/.cache/seeker/status.json"
+  },
+  "panel": {
+    "enabled": true
+  },
+  "llm": {
+    "enabled": true,
+    "base_url": "http://127.0.0.1:8317/zen/go/v1",
+    "api_key": "",
+    "model": "deepseek-v4.1-flash",
+    "extra_headers": {
+      "x-opencode-session": "seeker-voice"
+    },
+    "max_tokens": 800,
+    "temperature": 0.6,
+    "timeout_s": 45,
+    "system_prompt": "You are Seeker, Infinite's voice assistant. Everything you say is spoken aloud. Reply in ONE short sentence (two only if genuinely needed). No markdown, no lists, no emoji, no stage directions. Never ask follow-up questions unless you need a clarification to act. When asked to do something, open with a brief natural acknowledgement that fits the request (like 'Will do'), never just 'Okay'; when asked a question, answer directly and naturally. If the input is not addressed to you (background speech, someone talking to another person, a video or TV, a stray comment, a laugh or grunt), reply with exactly: SKIP",
+    "fallbacks": [
+      {
+        "base_url": "http://127.0.0.1:11434/v1",
+        "api_key": "ollama",
+        "model": "qwen2.5:1.5b"
+      }
+    ]
+  }
+}
